@@ -50,6 +50,16 @@ class BarcodeScanner : AppCompatActivity(), DecoratedBarcodeView.TorchListener {
         capture.onResume()
     }
 
+    override fun onPause() {
+        super.onPause()
+        capture.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        capture.onDestroy()
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         capture.onSaveInstanceState(outState)
