@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -42,8 +43,20 @@ class BarcodeScanner : AppCompatActivity(), DecoratedBarcodeView.TorchListener {
         binding.btnFlash.setOnClickListener {
             switchFlashlight(it)
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        capture.onResume()
+    }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        capture.onSaveInstanceState(outState)
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        return super.onKeyDown(keyCode, event) || binding.zxingBarcodeScanner.onKeyDown(keyCode, event)
     }
     fun hasFlash(): Boolean {
         return applicationContext.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)
